@@ -1,0 +1,7 @@
+$primary_color: #79b5ff; /* Esta es una variable en Sass */
+$font-size: 18px;
+
+body {
+  font-size: $font-size;
+  background-color: $primary_color
+}

@@ -32,10 +32,10 @@ function createAuthor(nombre, last_name, nacionalidad, biografia, genero, edad) 
   });
 }
 
-function editAuthor(id, nombre, last_name, nacionalidad, biografia, genero, edad) {
+function editAuthor(id, nombre, apellido, nacionalidad, biografia, genero, edad) {
   const form = {};
   if (nombre) form.name = nombre;
-  if (last_name) form.last_name = last_name;
+  if (apellido) form.last_name = apellido;
   if (nacionalidad) form.nacionalidad = nacionalidad;
   if (biografia) form.biography = biografia;
   if (genero) form.gender = genero;
@@ -91,18 +91,7 @@ function findAuthor(id) {
   });
 }
 
-// for (var i = 0; i < 4000; i++) {
-//   createAuthor("[Object]", "[Object]", "MX", "[Object]", "F", -1)
-//     .then((body) => {
-//       console.log(body.id);
-//       deleteAuthor(body.id)
-//         .then((res) => console.log(res))
-//         .catch((err) => console.log(err));
-//     })
-//     .catch((err) => console.log(err));
-// }
-
-async function DDoS_Attack_await() {
+async function DoS_Attack_await() {
   try {
     for (var i = 0; i < 100; i++) {
       const creado = await createAuthor("A", "B", "MX", "C", "F", -9999);
@@ -118,9 +107,9 @@ async function DDoS_Attack_await() {
     console.log(err);
   }
 }
-// DDoS_Attack_await();
+// DoS_Attack_await();
 
-function DDoS_Attack_thens() {
+function DoS_Attack_thens() {
   for (var i = 0; i < 100; i++) {
     createAuthor("A", "B", "MX", "C", "F", -9999)
       .then((doc) => {
@@ -135,4 +124,4 @@ function DDoS_Attack_thens() {
       .catch((err) => console.log(err));
   }
 }
-DDoS_Attack_thens();
+DoS_Attack_thens();
