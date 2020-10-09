@@ -43,6 +43,17 @@ class Game {
   }
 
   /**
+   * This build the flag, given the info of the flag.
+   */
+  buildBandera(country, cb) {
+    const img = document.createElement("img");
+    img.setAttribute("src", country.flag); // Le agrega un atributo
+    img.setAttribute("id", country.translations.es); // Le agrega un atributo
+    img.addEventListener("click", cb);
+    return img;
+  }
+
+  /**
    * Start the game, reloading the data
    */
   start() {
@@ -55,26 +66,25 @@ class Game {
     const paises = this.choiceCountries;
     let correcto = this.winnerCounty;
 
-    for (let i = 0; i < paises.length; i++) {
-      var img = document.createElement("img");
-      img.setAttribute("src", paises[i].flag); // Le agrega un atributo
-      img.setAttribute("id", paises[i].translations.es); // Le agrega un atributo
-      img.addEventListener("click", (element) => {
-        // Añades el listener de cuando haces click
-        if (resultados.style.visibility != "visible") {
-          if (element.target.id == correcto.translations.es) {
-            document.getElementById("population").innerHTML = "<b>Población:</b> " + correcto.population;
+    const callback = (element) => {
+      // Añades el listener de cuando haces click
+      if (resultados.style.visibility != "visible") {
+        if (element.target.id == correcto.translations.es) {
+          document.getElementById("population").innerHTML = "<b>Población:</b> " + correcto.population;
 
-            document.getElementById("capital").innerHTML = "<b>Capital:</b> " + correcto.capital;
+          document.getElementById("capital").innerHTML = "<b>Capital:</b> " + correcto.capital;
 
-            resultados.style.visibility = "visible";
-          } else {
-            alert("Nope");
-          }
+          resultados.style.visibility = "visible";
         } else {
-          window.location.reload(false);
+          alert("Nope");
         }
-      });
+      } else {
+        window.location.reload(false);
+      }
+    };
+
+    for (let i = 0; i < paises.length; i++) {
+      const img = this.buildBandera(paises[i], callback);
       banderas.appendChild(img); // Añade la imágen a las banderas
     }
 
