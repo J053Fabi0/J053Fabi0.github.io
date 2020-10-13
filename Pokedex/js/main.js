@@ -3,12 +3,10 @@ var from = 0;
 var temp = "";
 (function () {
   // Añado un event listener al botón de cancelar búsqueda
-  document
-    .getElementById("cancelSearch")
-    .addEventListener("click", cancelSearchF);
+  document.getElementById("cancelSearch").addEventListener("click", cancelSearchF);
 
   // Vacío el campo de búsqueda
-  document.getElementById("buscar").value = "";
+  document.getElementById("buscar").value = "1";
 
   // Cargo las primeras cartas
   var contenedor = document.getElementById("aquiVanTodos");
@@ -81,12 +79,7 @@ function getPokemonCard(pokemon) {
       badgeType = "badge-info";
     } else if (item == "Ground") {
       badgeType = "badge-borwn";
-    } else if (
-      item == "Ghost" ||
-      item == "Rock" ||
-      item == "Normal" ||
-      item == "Steel"
-    ) {
+    } else if (item == "Ghost" || item == "Rock" || item == "Normal" || item == "Steel") {
       badgeType = "badge-secondary";
     } else if (item == "Fairy") {
       badgeType = "badge-pink";
@@ -159,8 +152,7 @@ function search(givedEnter) {
       }
     }
   } else {
-    if (parseInt(searchField) <= pokemons.length && parseInt(searchField) > 0)
-      results.push(parseInt(searchField) - 1);
+    if (parseInt(searchField) <= pokemons.length && parseInt(searchField) > 0) results.push(parseInt(searchField) - 1);
   }
 
   // Reviso si se encontró algo para avisar o mostrar los resultados
@@ -175,8 +167,7 @@ function search(givedEnter) {
     }
     container.innerHTML = "";
     for (var i = 0; i < results.length; i++) {
-      container.innerHTML =
-        container.innerHTML + getPokemonCard(pokemons[results[i]]);
+      container.innerHTML = container.innerHTML + getPokemonCard(pokemons[results[i]]);
     }
   } else {
     document.getElementById("alerta_titulo").innerHTML = "Rayos...";

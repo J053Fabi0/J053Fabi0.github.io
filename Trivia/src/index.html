@@ -15,22 +15,31 @@
       <div class="jumbotron bg-light">
         <div class="container">
           <div class="flex-column d-flex justify-content-center">
-            <div class="form-group">
-              <label for="difficulty"
-                ><h5>Difficulty: <span class="badge badge-success" id="difficultyBadge">Easy</span></h5>
-              </label>
-              <input type="range" class="custom-range" min="1" max="3" value="1" id="difficulty" />
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <h5>Difficulty: <span class="badge badge-success" id="difficultyBadge">Easy</span></h5>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success btn-lg" id="easyButton">Easy</button>
+                    <button type="button" class="btn btn-secondary btn-lg" id="mediumButton">Medium</button>
+                    <button type="button" class="btn btn-secondary btn-lg" id="hardButton">Hard</button>
+                    <button type="button" class="btn btn-secondary btn-lg" id="anyButton">Any</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="form-group">
+                  <label for="typeOfQuestions"><h5>Select the type of the questions</h5></label>
+                  <select class="custom-select custom-select-lg" id="typeOfQuestions">
+                    <option value="any">Multiple choice and True / False</option>
+                    <option value="multiple">Multiple choice</option>
+                    <option value="boolean">True / False</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label for="typeOfQuestions">Select the type of the questions</label>
-              <select class="custom-select custom-select-lg" id="typeOfQuestions">
-                <option>Multiple choice and True / False</option>
-                <option>Multiple choice</option>
-                <option>True / False</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="categoryOfQuestions">Select the category</label>
+              <label for="categoryOfQuestions"><h5>Select the category</h5></label>
               <select class="custom-select custom-select-lg" id="categoryOfQuestions">
                 <option value="any">Any Category</option>
                 <option value="9">General Knowledge</option>
@@ -59,141 +68,30 @@
                 <option value="32">Entertainment: Cartoon &amp; Animations</option>
               </select>
             </div>
-            <button type="button" class="btn btn-success btn-lg" data-toggle="collapse" data-target="#collapseForum">
-              Start trivia!
-            </button>
+            <button type="button" class="btn btn-success btn-lg" id="startTriviaButton">Start trivia!</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- <div class="container"> -->
-    <!--   <div class="card-deck mb-4"> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?apples" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a longer card with supporting text below as a natural lead-in to additional content. This content is a -->
-    <!--           little bit longer. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?bosque" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?roses" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a wider card with supporting text below as a natural lead-in to additional content. This card has even -->
-    <!--           longer content than the first to show that equal height action. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!--   <div class="card-deck mb-4"> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?espacio" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a longer card with supporting text below as a natural lead-in to additional content. This content is a -->
-    <!--           little bit longer. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?paisaje" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?fire" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a wider card with supporting text below as a natural lead-in to additional content. This card has even -->
-    <!--           longer content than the first to show that equal height action. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!--   <div class="card-deck mb-4"> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?futuro" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a longer card with supporting text below as a natural lead-in to additional content. This content is a -->
-    <!--           little bit longer. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?code" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--     <div class="card"> -->
-    <!--       <img src="https://source.unsplash.com/1600x900/?beatles" class="card-img-top" alt="..." /> -->
-    <!--       <div class="card-body"> -->
-    <!--         <h5 class="card-title">Card title</h5> -->
-    <!--         <p class="card-text"> -->
-    <!--           This is a wider card with supporting text below as a natural lead-in to additional content. This card has even -->
-    <!--           longer content than the first to show that equal height action. -->
-    <!--         </p> -->
-    <!--         <p class="card-text"> -->
-    <!--           <small class="text-muted">Last updated 3 mins ago</small> -->
-    <!--         </p> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!-- </div> -->
-
-    <!-- <footer class="text-muted justify-content-center d-flex align-items-center" style="height: 250px; background-color: #e0e0e0"> -->
-    <!--   <div class="container"> -->
-    <!--     <div class="row justify-content-between"> -->
-    <!--       <p class="col-9"> -->
-    <!--         Below is an example of a basic card with mixed content and a fixed width. Cards have no fixed width to start, so -->
-    <!--         they’ll naturally fill the full width of its parent element. -->
-    <!--       </p> -->
-    <!--       <button type="button" class="btn btn-link col-3">Link</button> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!-- </footer> -->
+    <!-- Modal -->
+    <div class="modal fade" id="alerta" tabindex="-1" role="dialog" aria-labelledby="alerta" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="alerta_titulo">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="alerta_mensaje"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
