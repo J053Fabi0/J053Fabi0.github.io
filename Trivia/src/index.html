@@ -11,6 +11,7 @@
       </div>
     </nav>
 
+    <!-- Fourm with options before start trivia -->
     <div class="collapse" id="collapseForum" aria-expanded="true">
       <div class="jumbotron bg-light">
         <div class="container">
@@ -68,13 +69,73 @@
                 <option value="32">Entertainment: Cartoon &amp; Animations</option>
               </select>
             </div>
-            <button type="button" class="btn btn-success btn-lg" id="startTriviaButton">Start trivia!</button>
+            <button type="button" class="btn btn-success btn-lg" id="startTriviaButton">Start the trivia!</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Questions -->
+    <div class="collapse" id="questions" aria-expanded="true">
+      <div class="jumbotron bg-light">
+        <div class="container">
+          <div class="d-flex flex-row justify-content-end mt-4">
+            <span class="badge badge-purple mr-1" id="categoryOfQuestion"></span>
+            <span id="hardnessOfQuestion"></span>
+          </div>
+          <div class="flex-column d-flex justify-content-center">
+            <h1 id="questionText"></h1>
+          </div>
+
+          <div class="row mt-4" id="answersRow_0">
+            <div class="col">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_0">Info</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_1">Info</button>
+            </div>
+          </div>
+          <div class="row mt-4" id="answersRow_1">
+            <div class="col">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_2">Info</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_3">Info</button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-end mt-4">
+            <h5>Points: <span class="badge badge-pill badge-dark" id="points">0</span></h5>
+            <h6>
+              Question <span class="badge badge-pill badge-primary" id="numberOfQuestion"></span> of
+              <span class="badge badge-pill badge-secondary">10</span>
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for regresive count before start the trivia -->
+    <div
+      class="modal fade"
+      id="regresiveCount"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="alerta"
+      aria-hidden="true"
+      data-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body d-flex justify-content-center flex-column align-items-center">
+            <h5>The trivia starts in</h5>
+            <h1 id="timeToTrivia">3</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generic modal -->
     <div class="modal fade" id="alerta" tabindex="-1" role="dialog" aria-labelledby="alerta" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -88,10 +149,11 @@
             <p id="alerta_mensaje"></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
           </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+
