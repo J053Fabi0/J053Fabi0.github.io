@@ -96,12 +96,12 @@ import TriviaGame from "./TriviaGame";
   });
 
   function startTrivia(questions) {
-    console.log(questions);
     const triviaGame = new TriviaGame(questions);
     $("#collapseForum").collapse("hide");
+    triviaGame.setEventListenersToBtns();
 
-    triviaGame.showRegresiveCount(true).then(() => {
-      window.setTimeout(() => triviaGame.prepareNextQuestion(), 600);
+    triviaGame.showRegresiveCount().then(() => {
+      triviaGame.showNextQuestion();
     });
   }
 

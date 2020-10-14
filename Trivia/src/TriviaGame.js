@@ -5,6 +5,7 @@ class TriviaGame {
   constructor(questions) {
     this.questions = questions;
     this.points = 0;
+    this.streak = 0;
     this.currentQuestion = 0;
     this.correctAnswer;
   }
@@ -23,19 +24,45 @@ class TriviaGame {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  _getMotivationalPhrase(won) {
+    const winnerPhrases = [
+      "You're the best!",
+      "Well done!",
+      "Amazing!",
+      "Excellent!",
+      "Cool!",
+      "Nice! Hard work always pays off!",
+      "Congrats!",
+      "Good Effort!",
+      "You're getting good at this!",
+    ];
+    const looserPhrases = [
+      "Don't worry, making mistakes helps you learn!",
+      "Don't give up!",
+      "Nice try!",
+      "Even when you're wrong, you're still learning!",
+      "Try harder!",
+      "You can do it!",
+      "Mistakes are the best way to learn!",
+    ];
+
+    if (won) return winnerPhrases[Math.floor(Math.random() * winnerPhrases.length)];
+    else return looserPhrases[Math.floor(Math.random() * looserPhrases.length)];
+  }
+
   showRegresiveCount(skipCount = false) {
     return new Promise((resolve) => {
       if (skipCount) return resolve();
 
       $("#regresiveCount").modal();
       window.setTimeout(() => {
-        document.getElementById("timeToTrivia").innerText = "2";
+        document.getElementById("timeToTrivia").innerText = "Steady";
         window.setTimeout(() => {
-          document.getElementById("timeToTrivia").innerText = "1";
+          document.getElementById("timeToTrivia").innerText = "Go!";
           window.setTimeout(() => {
-            $("#regresiveCount").modal("hide");
             resolve();
-          }, 1000);
+            $("#regresiveCount").modal("hide");
+          }, 800);
         }, 1000);
       }, 1200);
     });
@@ -53,24 +80,76 @@ class TriviaGame {
   }
 
   setEventListenersToBtns() {
+    for (let i = 0; i < 4; i++)
+      document.getElementById(`answerBtn_${i}`).addEventListener("click", (btn) => this.questionAnswered(btn));
+  }
+
+  questionAnswered(btn) {
+    if (btn.target.innerText == this.correctAnswer) {
+      const points = this.points;
+      this.points = points + 100 + this.streak * 10;
+      this.streak++;
+    } else {
+      this.streak = 0;
+    }
+
+    this.updatePoints();
+    this.markCorrectAnswer(btn.target.id);
+
+    window.setTimeout(() => {
+      document.getElementById("motivationalPhrase").innerText = this._getMotivationalPhrase(
+        btn.target.innerText == this.correctAnswer
+      );
+      $("#motivationalModal").modal();
+      window.setTimeout(() => {
+        $("#motivationalModal").modal("hide");
+        this.showNextQuestion();
+      }, 2000);
+    }, 200);
+  }
+
+  markCorrectAnswer(idOfClickedBtn) {
     for (let i = 0; i < 4; i++) {
-      document.getElementById(`answerBtn_${i}`).addEventListener("click", (btn) => {
-        console.log(btn.target.innerText == this.correctAnswer);
-      });
+      const btn = document.getElementById(`answerBtn_${i}`);
+
+      let color;
+      if (btn.innerText == this.correctAnswer) color = "success";
+      else if (btn.id == idOfClickedBtn) color = "danger";
+      else color = "secondary";
+
+      btn.className = `btn btn-block option-btn btn-${color}`;
     }
   }
 
+  restoreColorOfBtns() {
+    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).className = "btn btn-block option-btn btn-info";
+  }
+
   showNextQuestion() {
-    $("#questions").collapse("show");
+    $("#questions").collapse("hide");
+
+    if (this.currentQuestion >= 10) this.gameEnded();
+    else
+      window.setTimeout(() => {
+        this.prepareNextQuestion();
+        $("#questions").collapse("show");
+      }, 400);
+  }
+
+  updatePoints() {
+    document.getElementById("points").innerText = this.points;
+    document.getElementById("streak").innerText = this.streak;
   }
 
   prepareNextQuestion() {
     const thisQuestion = this.thisQuestion;
     const difficulty = thisQuestion.difficulty;
     const questionText = document.getElementById("questionText");
-    this.setEventListenersToBtns();
+    // this.setEventListenersToBtns();
+    this.restoreColorOfBtns();
 
     this.correctAnswer = decodeURIComponent(thisQuestion.correct_answer);
+    console.log(this.correctAnswer);
 
     // Se the badge that says the difficulty of the current question
     const hardnessOfQuestion = document.getElementById("hardnessOfQuestion");
@@ -94,9 +173,7 @@ class TriviaGame {
     // Assign the text to each button
     if (thisQuestion.type == "multiple") {
       const scrambledAnswers = this.scrambledAnswers;
-      for (let i = 0; i < 4; i++) {
-        document.getElementById(`answerBtn_${i}`).innerText = scrambledAnswers[i];
-      }
+      for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).innerText = scrambledAnswers[i];
     } else {
       document.getElementById("answerBtn_0").innerText = "True";
       document.getElementById("answerBtn_1").innerText = "False";
@@ -104,9 +181,9 @@ class TriviaGame {
 
     // Increase the currentQuestion, so the next time I call this method, it loads the next question
     this.currentQuestion++;
-
-    this.showNextQuestion();
   }
+
+  gameEnded() {}
 }
 
 export default TriviaGame;

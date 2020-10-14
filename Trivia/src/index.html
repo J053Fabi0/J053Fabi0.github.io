@@ -16,27 +16,23 @@
       <div class="jumbotron bg-light">
         <div class="container">
           <div class="flex-column d-flex justify-content-center">
-            <div class="row">
-              <div class="col-4">
-                <div class="form-group">
-                  <h5>Difficulty: <span class="badge badge-success" id="difficultyBadge">Easy</span></h5>
-                  <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-success btn-lg" id="easyButton">Easy</button>
-                    <button type="button" class="btn btn-secondary btn-lg" id="mediumButton">Medium</button>
-                    <button type="button" class="btn btn-secondary btn-lg" id="hardButton">Hard</button>
-                    <button type="button" class="btn btn-secondary btn-lg" id="anyButton">Any</button>
-                  </div>
+            <div class="row mb-4">
+              <div class="col-lg-5">
+                <h5>Difficulty: <span class="badge badge-success" id="difficultyBadge">Easy</span></h5>
+                <div class="btn-group" role="group" aria-label="Basic example" style="margin-top: 0.4em">
+                  <button type="button" class="btn btn-success btn-lg" id="easyButton">Easy</button>
+                  <button type="button" class="btn btn-secondary btn-lg" id="mediumButton">Medium</button>
+                  <button type="button" class="btn btn-secondary btn-lg" id="hardButton">Hard</button>
+                  <button type="button" class="btn btn-secondary btn-lg" id="anyButton">Any</button>
                 </div>
               </div>
-              <div class="col-8">
-                <div class="form-group">
-                  <label for="typeOfQuestions"><h5>Select the type of the questions</h5></label>
-                  <select class="custom-select custom-select-lg" id="typeOfQuestions">
-                    <option value="any">Multiple choice and True / False</option>
-                    <option value="multiple">Multiple choice</option>
-                    <option value="boolean">True / False</option>
-                  </select>
-                </div>
+              <div class="col-lg-7 mt-sm-3 mt-md-3 mt-lg-0 mt-xl-0">
+                <label for="typeOfQuestions"><h5>Select the type of the questions</h5></label>
+                <select class="custom-select custom-select-lg" id="typeOfQuestions">
+                  <option value="any">Multiple choice and True / False</option>
+                  <option value="multiple">Multiple choice</option>
+                  <option value="boolean">True / False</option>
+                </select>
               </div>
             </div>
             <div class="form-group">
@@ -105,7 +101,10 @@
           </div>
 
           <div class="d-flex justify-content-between align-items-end mt-4">
-            <h5>Points: <span class="badge badge-pill badge-dark" id="points">0</span></h5>
+            <div id="row">
+              <h5>Points: <span class="badge badge-pill badge-dark" id="points">0</span></h5>
+              <h5>Streak: <span class="badge badge-pill badge-orange" id="streak">0</span></h5>
+            </div>
             <h6>
               Question <span class="badge badge-pill badge-primary" id="numberOfQuestion"></span> of
               <span class="badge badge-pill badge-secondary">10</span>
@@ -115,10 +114,17 @@
       </div>
     </div>
 
+    <!-- Fourm with options before start trivia -->
+    <div class="collapse" id="collapseForum" aria-expanded="true">
+      <div class="jumbotron bg-light">
+        <div class="container"></div>
+      </div>
+    </div>
+
     <!-- Modal for regresive count before start the trivia -->
     <div
-      class="modal fade"
       id="regresiveCount"
+      class="modal fade"
       tabindex="-1"
       role="dialog"
       aria-labelledby="alerta"
@@ -128,8 +134,27 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body d-flex justify-content-center flex-column align-items-center">
-            <h5>The trivia starts in</h5>
-            <h1 id="timeToTrivia">3</h1>
+            <!-- <h5>The trivia starts in</h5> -->
+            <h1 id="timeToTrivia">Ready</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for motivational words -->
+    <div
+      id="motivationalModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="alerta"
+      aria-hidden="true"
+      data-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body d-flex justify-content-center flex-column align-items-center">
+            <h1 id="motivationalPhrase"></h1>
           </div>
         </div>
       </div>
