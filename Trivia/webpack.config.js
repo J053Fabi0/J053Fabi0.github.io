@@ -31,15 +31,6 @@ module.exports = {
         test: /\.(scss)$/,
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
       },
-      // {
-      //   test: /\.scss$/,
-      //   use: [
-      //     // El orden sí importa
-      //     "style-loader", // Procesa styles en html
-      //     "css-loader", // Prpocesa css files
-      //     "sass-loader", // Procesa sass files
-      //   ],
-      // },
     ],
   },
   plugins: [
