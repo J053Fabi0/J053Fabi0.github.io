@@ -1,5 +1,4 @@
 import $ from "jquery";
-import axios from "axios";
 
 class TriviaGame {
   constructor(questions) {
@@ -7,7 +6,7 @@ class TriviaGame {
     this.points = 0;
     this.streak = 0;
     this.currentQuestion = 0;
-    this.correctAnswer;
+    this.correctBtn;
   }
 
   _shuffleArray(array) {
@@ -70,9 +69,15 @@ class TriviaGame {
 
   get scrambledAnswers() {
     const thisQuestion = this.thisQuestion;
-    const answers = [...thisQuestion.incorrect_answers];
-    answers.push(thisQuestion.correct_answer);
-    return this._shuffleArray(answers).map((value) => decodeURIComponent(value));
+    const answers = this._shuffleArray([...thisQuestion.incorrect_answers]);
+
+    // This insert the correct answer in a random position, and also save that position
+    // to correctBtn
+    const randomPos = Math.floor(Math.random() * 4);
+    this.correctBtn = `answerBtn_${randomPos}`;
+    answers.slice(randomPos, thisQuestion.correct_answer);
+
+    return answers.map((value) => decodeURIComponent(value));
   }
 
   get thisQuestion() {
@@ -85,7 +90,7 @@ class TriviaGame {
   }
 
   questionAnswered(btn) {
-    if (btn.target.innerText == this.correctAnswer) {
+    if (btn.target.id == this.correctBtn) {
       const points = this.points;
       this.points = points + 100 + this.streak * 10;
       this.streak++;
@@ -97,9 +102,7 @@ class TriviaGame {
     this.markCorrectAnswer(btn.target.id);
 
     window.setTimeout(() => {
-      document.getElementById("motivationalPhrase").innerText = this._getMotivationalPhrase(
-        btn.target.innerText == this.correctAnswer
-      );
+      document.getElementById("motivationalPhrase").innerText = this._getMotivationalPhrase(btn.target.id == this.correctBtn);
       $("#motivationalModal").modal();
       window.setTimeout(() => {
         $("#motivationalModal").modal("hide");
@@ -113,7 +116,7 @@ class TriviaGame {
       const btn = document.getElementById(`answerBtn_${i}`);
 
       let color;
-      if (btn.innerText == this.correctAnswer) color = "success";
+      if (btn.id == this.correctBtn) color = "success";
       else if (btn.id == idOfClickedBtn) color = "danger";
       else color = "secondary";
 
@@ -147,9 +150,6 @@ class TriviaGame {
     const questionText = document.getElementById("questionText");
     // this.setEventListenersToBtns();
     this.restoreColorOfBtns();
-
-    this.correctAnswer = decodeURIComponent(thisQuestion.correct_answer);
-    console.log(this.correctAnswer);
 
     // Se the badge that says the difficulty of the current question
     const hardnessOfQuestion = document.getElementById("hardnessOfQuestion");
