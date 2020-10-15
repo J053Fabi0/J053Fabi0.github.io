@@ -1,12 +1,17 @@
 import $ from "jquery";
 
 class TriviaGame {
-  constructor(questions) {
+  constructor(questions, numberOfQuestions, images, phrases) {
     this.questions = questions;
     this.points = 0;
     this.streak = 0;
+    this.longestStreak = 0;
+    this.corectAnswered = 0;
     this.currentQuestion = 0;
+    this.numberOfQuestions = numberOfQuestions;
     this.correctBtn;
+    this.phrases = phrases;
+    this.images = images;
   }
 
   _shuffleArray(array) {
@@ -23,37 +28,12 @@ class TriviaGame {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  _getMotivationalPhrase(won) {
-    const winnerPhrases = [
-      "You're the best!",
-      "Well done!",
-      "Amazing!",
-      "Excellent!",
-      "Cool!",
-      "Nice! Hard work always pays off!",
-      "Congrats!",
-      "Good Effort!",
-      "You're getting good at this!",
-    ];
-    const looserPhrases = [
-      "Don't worry, making mistakes helps you learn!",
-      "Don't give up!",
-      "Nice try!",
-      "Even when you're wrong, you're still learning!",
-      "Try harder!",
-      "You can do it!",
-      "Mistakes are the best way to learn!",
-    ];
-
-    if (won) return winnerPhrases[Math.floor(Math.random() * winnerPhrases.length)];
-    else return looserPhrases[Math.floor(Math.random() * looserPhrases.length)];
-  }
-
   showRegresiveCount(skipCount = false) {
     return new Promise((resolve) => {
       if (skipCount) return resolve();
 
       $("#regresiveCount").modal();
+      document.getElementById("timeToTrivia").innerText = "Ready";
       window.setTimeout(() => {
         document.getElementById("timeToTrivia").innerText = "Steady";
         window.setTimeout(() => {
@@ -75,7 +55,7 @@ class TriviaGame {
     // to correctBtn
     const randomPos = Math.floor(Math.random() * 4);
     this.correctBtn = `answerBtn_${randomPos}`;
-    answers.slice(randomPos, thisQuestion.correct_answer);
+    answers.splice(randomPos, 0, thisQuestion.correct_answer);
 
     return answers.map((value) => decodeURIComponent(value));
   }
@@ -85,24 +65,46 @@ class TriviaGame {
   }
 
   setEventListenersToBtns() {
-    for (let i = 0; i < 4; i++)
+    for (let i = 0; i < 4; i++) {
+      // Because it's hard to remove event listeners from old session, I simply create a clon of the button and
+      // replace it with the old button, efectively removing any event listener
+      const old_button = document.getElementById(`answerBtn_${i}`);
+      const new_button = old_button.cloneNode(true);
+      old_button.parentNode.replaceChild(new_button, old_button);
+
+      // Add event listener
       document.getElementById(`answerBtn_${i}`).addEventListener("click", (btn) => this.questionAnswered(btn));
+    }
+  }
+
+  disableBtns() {
+    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).setAttributeNode(document.createAttribute("disabled"));
+  }
+
+  enableBtns() {
+    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).removeAttribute("disabled");
   }
 
   questionAnswered(btn) {
+    this.disableBtns();
     if (btn.target.id == this.correctBtn) {
       const points = this.points;
       this.points = points + 100 + this.streak * 10;
       this.streak++;
+      this.corectAnswered++;
     } else {
       this.streak = 0;
     }
+    this.longestStreak = this.streak > this.longestStreak ? this.streak : this.longestStreak;
 
     this.updatePoints();
     this.markCorrectAnswer(btn.target.id);
 
+    // Show the motivational phrase
     window.setTimeout(() => {
-      document.getElementById("motivationalPhrase").innerText = this._getMotivationalPhrase(btn.target.id == this.correctBtn);
+      document.getElementById("motivationalPhrase").innerText = this.phrases.getMotivationalPhrase(
+        btn.target.id == this.correctBtn
+      );
       $("#motivationalModal").modal();
       window.setTimeout(() => {
         $("#motivationalModal").modal("hide");
@@ -128,10 +130,20 @@ class TriviaGame {
     for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).className = "btn btn-block option-btn btn-info";
   }
 
+  startNewTrivia() {
+    $("#results").collapse("hide");
+    $("#collapseForum").collapse("hide");
+    this.updatePoints();
+    this.setEventListenersToBtns();
+    this.showRegresiveCount().then(() => {
+      this.showNextQuestion();
+    });
+  }
+
   showNextQuestion() {
     $("#questions").collapse("hide");
 
-    if (this.currentQuestion >= 10) this.gameEnded();
+    if (this.currentQuestion >= this.numberOfQuestions) this.gameEnded();
     else
       window.setTimeout(() => {
         this.prepareNextQuestion();
@@ -148,8 +160,8 @@ class TriviaGame {
     const thisQuestion = this.thisQuestion;
     const difficulty = thisQuestion.difficulty;
     const questionText = document.getElementById("questionText");
-    // this.setEventListenersToBtns();
     this.restoreColorOfBtns();
+    this.enableBtns();
 
     // Se the badge that says the difficulty of the current question
     const hardnessOfQuestion = document.getElementById("hardnessOfQuestion");
@@ -177,13 +189,41 @@ class TriviaGame {
     } else {
       document.getElementById("answerBtn_0").innerText = "True";
       document.getElementById("answerBtn_1").innerText = "False";
+      this.correctBtn = thisQuestion.correct_answer == "True" ? "answerBtn_0" : "answerBtn_1";
     }
+
+    console.log(this.correctBtn);
 
     // Increase the currentQuestion, so the next time I call this method, it loads the next question
     this.currentQuestion++;
   }
 
-  gameEnded() {}
+  gameEnded() {
+    $("#results").collapse("show");
+    const resultsTitle = document.getElementById("resultsTitle");
+    const finalPoints = document.getElementById("finalPoints");
+    const longestStreak = document.getElementById("longestStreak");
+    const corectAnswered = document.getElementById("numberOfCorrectAnswers");
+    const startAgainBtn = document.getElementById("startAgain");
+    const resultsImage = document.getElementById("resultsImage");
+
+    resultsTitle.innerText =
+      this.corectAnswered >= 5 ? "\u{1F389} Congrats! \u{1F973}" : "Oh, well... At least you tried, right? \u{1F972}";
+
+    resultsImage.src = this.images.catImage(this.corectAnswered <= 5);
+
+    finalPoints.innerText = this.points;
+    longestStreak.innerText = this.longestStreak;
+    corectAnswered.innerText = this.corectAnswered;
+
+    startAgainBtn.addEventListener("click", () => this.showFirstForm());
+  }
+
+  showFirstForm() {
+    $("#results").collapse("hide");
+    $("#questions").collapse("hide");
+    $("#collapseForum").collapse("show");
+  }
 }
 
 export default TriviaGame;

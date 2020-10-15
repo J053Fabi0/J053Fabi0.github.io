@@ -7,13 +7,14 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +66 TriviaGame.js
-badd +83 index.html
-badd +106 index.js
-badd +15 style/style.scss
+badd +241 index.html
+badd +103 index.js
+badd +212 TriviaGame.js
+badd +84 Images.js
+badd +1 Phrases.js
 argglobal
 %argdel
-$argadd TriviaGame.js
+$argadd index.html
 set stal=2
 edit index.html
 set splitbelow splitright
@@ -25,22 +26,36 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-setlocal fdm=manual
-setlocal fde=0
+setlocal fdm=expr
+setlocal fde=b:anyfold_ind_buffer[v:lnum-1]
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=0
+setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-silent! normal! zE
-let s:l = 36 - ((35 * winheight(0) + 18) / 37)
+2
+normal! zo
+105
+normal! zo
+223
+normal! zo
+224
+normal! zo
+225
+normal! zo
+229
+normal! zo
+233
+normal! zo
+let s:l = 242 - ((19 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-36
-normal! 020|
-tabedit index.js
+242
+normal! 015|
+lcd ~/Documents/Actividades\ master/Trivia/src
+tabedit ~/Documents/Actividades\ master/Trivia/src/index.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -50,22 +65,26 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-setlocal fdm=manual
-setlocal fde=0
+setlocal fdm=expr
+setlocal fde=b:anyfold_ind_buffer[v:lnum-1]
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=0
+setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-silent! normal! zE
-let s:l = 106 - ((24 * winheight(0) + 18) / 37)
+8
+normal! zo
+103
+normal! zo
+let s:l = 101 - ((19 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-106
-normal! 03|
-tabedit TriviaGame.js
+101
+normal! 06|
+lcd ~/Documents/Actividades\ master/Trivia/src
+tabedit ~/Documents/Actividades\ master/Trivia/src/TriviaGame.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -75,22 +94,51 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-setlocal fdm=manual
-setlocal fde=0
+setlocal fdm=expr
+setlocal fde=b:anyfold_ind_buffer[v:lnum-1]
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=0
+setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-silent! normal! zE
-let s:l = 84 - ((17 * winheight(0) + 18) / 37)
+3
+normal! zo
+let s:l = 212 - ((21 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+212
+normal! 08|
+lcd ~/Documents/Actividades\ master/Trivia/src
+tabedit ~/Documents/Actividades\ master/Trivia/src/Images.js
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+argglobal
+setlocal fdm=expr
+setlocal fde=b:anyfold_ind_buffer[v:lnum-1]
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=99
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+34
+normal! zo
+let s:l = 84 - ((25 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 84
-normal! 03|
-tabedit style/style.scss
+normal! 08|
+lcd ~/Documents/Actividades\ master/Trivia/src
+tabedit ~/Documents/Actividades\ master/Trivia/src/Phrases.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -100,23 +148,22 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-setlocal fdm=manual
-setlocal fde=0
+setlocal fdm=expr
+setlocal fde=b:anyfold_ind_buffer[v:lnum-1]
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=0
+setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-silent! normal! zE
-let s:l = 15 - ((14 * winheight(0) + 18) / 37)
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-15
-normal! 0
+1
+normal! 04|
 lcd ~/Documents/Actividades\ master/Trivia/src
-tabnext 3
+tabnext 5
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

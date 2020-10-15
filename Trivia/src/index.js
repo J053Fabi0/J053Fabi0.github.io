@@ -1,14 +1,21 @@
 import "./style/style.scss";
+import Images from "./Images";
+import Phrases from "./Phrases";
 import "bootstrap";
 import $ from "jquery";
 import axios from "axios";
 import TriviaGame from "./TriviaGame";
 
 (function () {
-  const BASE_URL = "https://opentdb.com/api.php?amount=10&encode=url3986";
+  const numberOfQuestions = 3;
+  const BASE_URL = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=url3986`;
   let difficulty = "easy";
   let categoryOfQuestions = "any";
   let typeOfQuestions = "any";
+
+  // Declare the instances outside any other function, so that they keep their values throughout the different trivias
+  const images = new Images();
+  const phrases = new Phrases();
 
   // Show the first forum
   $("#collapseForum").collapse("show");
@@ -17,9 +24,11 @@ import TriviaGame from "./TriviaGame";
   ["easyButton", "mediumButton", "hardButton", "anyButton"].forEach((id) => {
     document.getElementById(id).addEventListener("click", () => updateDificulty(id));
   });
+
   // Handle changes in the difficulty
   function updateDificulty(id) {
     const button = document.getElementById(id);
+
     let status = "";
     if (button.id == "easyButton") status = "success";
     else if (button.id == "mediumButton") status = "warning";
@@ -36,7 +45,7 @@ import TriviaGame from "./TriviaGame";
       const tempBtn = document.getElementById(tempId);
 
       if (tempBtn.id == id) tempBtn.classList.replace("btn-secondary", `btn-${status}`);
-      else tempBtn.classList = "btn btn-secondary btn-lg";
+      else tempBtn.classList = "border border-dark btn btn-secondary btn-lg";
     });
   }
 
@@ -95,14 +104,16 @@ import TriviaGame from "./TriviaGame";
     }
   });
 
-  function startTrivia(questions) {
-    const triviaGame = new TriviaGame(questions);
-    $("#collapseForum").collapse("hide");
-    triviaGame.setEventListenersToBtns();
+  document.getElementById("leaveTriviaBtn").addEventListener("click", () => {
+    $("#results").collapse("hide");
+    $("#questions").collapse("hide");
+    $("#collapseForum").collapse("show");
+  });
 
-    triviaGame.showRegresiveCount().then(() => {
-      triviaGame.showNextQuestion();
-    });
+  function startTrivia(questions) {
+    const triviaGame = new TriviaGame(questions, numberOfQuestions, images, phrases);
+
+    triviaGame.startNewTrivia();
   }
 
   function handleErr(err) {
