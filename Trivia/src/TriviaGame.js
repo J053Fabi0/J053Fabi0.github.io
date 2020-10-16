@@ -12,6 +12,8 @@ class TriviaGame {
     this.correctBtn;
     this.phrases = phrases;
     this.images = images;
+    this.evenQuestion = 0;
+    this.phraseTime = 2000;
   }
 
   _shuffleArray(array) {
@@ -28,9 +30,9 @@ class TriviaGame {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  showRegresiveCount(skipCount = false) {
+  showRegresiveCount(useRegresiveCount = true) {
     return new Promise((resolve) => {
-      if (skipCount) return resolve();
+      if (!useRegresiveCount) return resolve();
 
       $("#regresiveCount").modal();
       document.getElementById("timeToTrivia").innerText = "Ready";
@@ -54,7 +56,7 @@ class TriviaGame {
     // This insert the correct answer in a random position, and also save that position
     // to correctBtn
     const randomPos = Math.floor(Math.random() * 4);
-    this.correctBtn = `answerBtn_${randomPos}`;
+    this.correctBtn = `answerBtn_${randomPos}_${this.evenQuestion}`;
     answers.splice(randomPos, 0, thisQuestion.correct_answer);
 
     return answers.map((value) => decodeURIComponent(value));
@@ -65,28 +67,33 @@ class TriviaGame {
   }
 
   setEventListenersToBtns() {
-    for (let i = 0; i < 4; i++) {
-      // Because it's hard to remove event listeners from old session, I simply create a clon of the button and
-      // replace it with the old button, efectively removing any event listener
-      const old_button = document.getElementById(`answerBtn_${i}`);
-      const new_button = old_button.cloneNode(true);
-      old_button.parentNode.replaceChild(new_button, old_button);
+    for (let j = 0; j <= 1; j++) {
+      for (let i = 0; i < 4; i++) {
+        // Because it's hard to remove event listeners from the old session, I simply create a clon of the button and
+        // replace it with the old button, efectively removing any event listener
+        const old_button = document.getElementById(`answerBtn_${i}_${j}`);
+        const new_button = old_button.cloneNode(true);
+        old_button.parentNode.replaceChild(new_button, old_button);
 
-      // Add event listener
-      document.getElementById(`answerBtn_${i}`).addEventListener("click", (btn) => this.questionAnswered(btn));
+        // Add event listener
+        document.getElementById(`answerBtn_${i}_${j}`).addEventListener("click", (btn) => this.questionAnswered(btn));
+      }
     }
   }
 
   disableBtns() {
-    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).setAttributeNode(document.createAttribute("disabled"));
+    for (let i = 0; i < 4; i++)
+      document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).setAttributeNode(document.createAttribute("disabled"));
   }
 
   enableBtns() {
-    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).removeAttribute("disabled");
+    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).removeAttribute("disabled");
   }
 
   questionAnswered(btn) {
     this.disableBtns();
+
+    // Set points for different variables
     if (btn.target.id == this.correctBtn) {
       const points = this.points;
       this.points = points + 100 + this.streak * 10;
@@ -102,20 +109,21 @@ class TriviaGame {
 
     // Show the motivational phrase
     window.setTimeout(() => {
+      // if (this.currentQuestion < this.numberOfQuestions) {
       document.getElementById("motivationalPhrase").innerText = this.phrases.getMotivationalPhrase(
         btn.target.id == this.correctBtn
       );
       $("#motivationalModal").modal();
-      window.setTimeout(() => {
-        $("#motivationalModal").modal("hide");
-        this.showNextQuestion();
-      }, 2000);
+      window.setTimeout(() => $("#motivationalModal").modal("hide"), this.phraseTime);
+      // }
+
+      this.showNextQuestionInMs(this.phraseTime);
     }, 200);
   }
 
   markCorrectAnswer(idOfClickedBtn) {
     for (let i = 0; i < 4; i++) {
-      const btn = document.getElementById(`answerBtn_${i}`);
+      const btn = document.getElementById(`answerBtn_${i}_${this.evenQuestion}`);
 
       let color;
       if (btn.id == this.correctBtn) color = "success";
@@ -127,85 +135,99 @@ class TriviaGame {
   }
 
   restoreColorOfBtns() {
-    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).className = "btn btn-block option-btn btn-info";
+    for (let i = 0; i < 4; i++)
+      document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).className = "btn btn-block option-btn btn-info";
   }
 
-  startNewTrivia() {
+  startNewTrivia(useRegresiveCount) {
     $("#results").collapse("hide");
-    $("#collapseForum").collapse("hide");
+    $("#collapseForm").collapse("hide");
     this.updatePoints();
     this.setEventListenersToBtns();
-    this.showRegresiveCount().then(() => {
-      this.showNextQuestion();
+    this.showRegresiveCount(useRegresiveCount).then(() => {
+      this.showNextQuestionInMs();
     });
   }
 
-  showNextQuestion() {
-    $("#questions").collapse("hide");
+  showNextQuestionInMs(showInMs) {
+    const isThisTheLasOne = this.currentQuestion >= this.numberOfQuestions;
+    this.evenQuestion = this.currentQuestion % 2;
 
-    if (this.currentQuestion >= this.numberOfQuestions) this.gameEnded();
-    else
-      window.setTimeout(() => {
-        this.prepareNextQuestion();
-        $("#questions").collapse("show");
-      }, 400);
+    // Show the next question in some ms
+    window.setTimeout(() => {
+      if (isThisTheLasOne) return this.gameEnded();
+      $(`#questions_${this.evenQuestion === 0 ? 1 : 0}`).collapse("hide");
+      $(`#questions_${this.evenQuestion}`).collapse("show");
+    }, showInMs);
+
+    if (!isThisTheLasOne) this.prepareNextQuestion();
+
+    // Increase the currentQuestion, so the next time I call this method, it loads the next question
+    if (!isThisTheLasOne) this.currentQuestion++;
   }
 
   updatePoints() {
-    document.getElementById("points").innerText = this.points;
-    document.getElementById("streak").innerText = this.streak;
+    document.getElementById("points_0").innerText = this.points;
+    document.getElementById("points_1").innerText = this.points;
+    document.getElementById("streak_0").innerText = this.streak;
+    document.getElementById("streak_1").innerText = this.streak;
   }
 
   prepareNextQuestion() {
     const thisQuestion = this.thisQuestion;
     const difficulty = thisQuestion.difficulty;
-    const questionText = document.getElementById("questionText");
+    const questionText = document.getElementById(`questionText_${this.evenQuestion}`);
     this.restoreColorOfBtns();
     this.enableBtns();
 
     // Se the badge that says the difficulty of the current question
-    const hardnessOfQuestion = document.getElementById("hardnessOfQuestion");
+    const hardnessOfQuestion = document.getElementById(`hardnessOfQuestion_${this.evenQuestion}`);
     hardnessOfQuestion.className = `badge badge-${
       difficulty == "easy" ? "success" : difficulty == "medium" ? "warning" : "danger"
     }`;
     hardnessOfQuestion.innerText = this._capitalizeFirstLetter(difficulty);
 
-    document.getElementById("categoryOfQuestion").innerText = decodeURIComponent(thisQuestion.category);
+    document.getElementById(`categoryOfQuestion_${this.evenQuestion}`).innerText = decodeURIComponent(thisQuestion.category);
 
     // Set the current number of question to the index
-    const numberOfQuestion = document.getElementById("numberOfQuestion");
+    const numberOfQuestion = document.getElementById(`numberOfQuestion_${this.evenQuestion}`);
     numberOfQuestion.innerHTML = this.currentQuestion + 1;
 
     // Show the question in the title
     questionText.innerText = decodeURIComponent(thisQuestion.question);
 
     // Hide the last row if the question is boolean
-    document.getElementById("answersRow_1").style.display = thisQuestion.type == "multiple" ? "flex" : "none";
+    document.getElementById(`answersRow_1_${this.evenQuestion}`).style.display =
+      thisQuestion.type == "multiple" ? "flex" : "none";
 
     // Assign the text to each button
     if (thisQuestion.type == "multiple") {
       const scrambledAnswers = this.scrambledAnswers;
-      for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}`).innerText = scrambledAnswers[i];
+      for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).innerText = scrambledAnswers[i];
     } else {
-      document.getElementById("answerBtn_0").innerText = "True";
-      document.getElementById("answerBtn_1").innerText = "False";
-      this.correctBtn = thisQuestion.correct_answer == "True" ? "answerBtn_0" : "answerBtn_1";
+      document.getElementById(`answerBtn_0_${this.evenQuestion}`).innerText = "True";
+      document.getElementById(`answerBtn_1_${this.evenQuestion}`).innerText = "False";
+      this.correctBtn =
+        thisQuestion.correct_answer == "True" ? `answerBtn_0_${this.evenQuestion}` : `answerBtn_1_${this.evenQuestion}`;
     }
 
     console.log(this.correctBtn);
+  }
 
-    // Increase the currentQuestion, so the next time I call this method, it loads the next question
-    this.currentQuestion++;
+  hideQuestions() {
+    $("#questions_0").collapse("hide");
+    $("#questions_1").collapse("hide");
   }
 
   gameEnded() {
     $("#results").collapse("show");
-    const resultsTitle = document.getElementById("resultsTitle");
-    const finalPoints = document.getElementById("finalPoints");
-    const longestStreak = document.getElementById("longestStreak");
-    const corectAnswered = document.getElementById("numberOfCorrectAnswers");
-    const startAgainBtn = document.getElementById("startAgain");
-    const resultsImage = document.getElementById("resultsImage");
+    this.hideQuestions();
+    const resultsTitle = document.getElementById(`resultsTitle`);
+    const finalPoints = document.getElementById(`finalPoints`);
+    const longestStreak = document.getElementById(`longestStreak`);
+    const corectAnswered = document.getElementById(`numberOfCorrectAnswers`);
+    const startAgainBtn = document.getElementById(`startAgain`);
+    const resultsImage = document.getElementById(`resultsImage`);
 
     resultsTitle.innerText =
       this.corectAnswered >= 5 ? "\u{1F389} Congrats! \u{1F973}" : "Oh, well... At least you tried, right?";
@@ -221,8 +243,8 @@ class TriviaGame {
 
   showFirstForm() {
     $("#results").collapse("hide");
-    $("#questions").collapse("hide");
-    $("#collapseForum").collapse("show");
+    this.hideQuestions();
+    $("#collapseForm").collapse("show");
   }
 }
 

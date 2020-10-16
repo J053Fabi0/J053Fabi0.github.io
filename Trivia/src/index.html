@@ -114,7 +114,7 @@
     </nav>
 
     <!-- Fourm with options before start trivia -->
-    <div class="collapse" id="collapseForum" aria-expanded="true">
+    <div class="collapse" id="collapseForm" aria-expanded="true">
       <div class="jumbotron bg-light">
         <div class="container">
           <div class="flex-column d-flex justify-content-center">
@@ -174,7 +174,7 @@
     </div>
 
     <!-- Questions -->
-    <div class="collapse" id="questions" aria-expanded="false">
+    <div class="collapse" id="questions_0" aria-expanded="false">
       <div class="jumbotron bg-light">
         <div class="container">
           <div class="d-flex flex-row justify-content-between align-items-top mt-4">
@@ -182,38 +182,81 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div>
-              <span class="badge badge-purple mr-1" id="categoryOfQuestion"></span>
-              <span id="hardnessOfQuestion"></span>
+              <span class="badge badge-purple mr-1" id="categoryOfQuestion_0"></span>
+              <span id="hardnessOfQuestion_0"></span>
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <h1 id="questionText"></h1>
+            <h1 id="questionText_0"></h1>
           </div>
-
-          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_0">
+          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_0_0">
             <div class="col-sm">
-              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_0"></button>
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_0_0"></button>
             </div>
             <div class="col-sm mt-3 mt-sm-0 mt-md-0 mt-lg-0 mt-xl-0">
-              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_1"></button>
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_1_0"></button>
             </div>
           </div>
-          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_1">
+          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_1_0">
             <div class="col-sm">
-              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_2"></button>
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_2_0"></button>
             </div>
             <div class="col-sm mt-3 mt-sm-0 mt-md-0 mt-lg-0 mt-xl-0">
-              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_3"></button>
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_3_0"></button>
             </div>
           </div>
-
           <div class="d-flex justify-content-between align-items-end mt-4">
-            <div id="row">
-              <h5>Points: <span class="badge badge-pill badge-dark" id="points">0</span></h5>
-              <h5>Streak: <span class="badge badge-pill badge-orange" id="streak">0</span></h5>
+            <div>
+              <h5>Points: <span class="badge badge-pill badge-dark" id="points_0">0</span></h5>
+              <h5>Streak: <span class="badge badge-pill badge-orange" id="streak_0">0</span></h5>
             </div>
             <h6>
-              Question <span class="badge badge-pill badge-primary" id="numberOfQuestion"></span> of
+              Question <span class="badge badge-pill badge-primary" id="numberOfQuestion_0"></span> of
+              <span class="badge badge-pill badge-secondary">10</span>
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse" id="questions_1" aria-expanded="false">
+      <div class="jumbotron bg-light">
+        <div class="container">
+          <div class="d-flex flex-row justify-content-between align-items-top mt-4">
+            <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#cancel">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div>
+              <span class="badge badge-purple mr-1" id="categoryOfQuestion_1"></span>
+              <span id="hardnessOfQuestion_1"></span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <h1 id="questionText_1"></h1>
+          </div>
+          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_0_1">
+            <div class="col-sm">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_0_1"></button>
+            </div>
+            <div class="col-sm mt-3 mt-sm-0 mt-md-0 mt-lg-0 mt-xl-0">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_1_1"></button>
+            </div>
+          </div>
+          <div class="row mt-3 mt-sm-4 mt-md-4 mt-lg-4 mt-xl-4" id="answersRow_1_1">
+            <div class="col-sm">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_2_1"></button>
+            </div>
+            <div class="col-sm mt-3 mt-sm-0 mt-md-0 mt-lg-0 mt-xl-0">
+              <button type="button" class="btn btn-info btn-block option-btn" id="answerBtn_3_1"></button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-end mt-4">
+            <div>
+              <h5>Points: <span class="badge badge-pill badge-dark" id="points_1">0</span></h5>
+              <h5>Streak: <span class="badge badge-pill badge-orange" id="streak_1">0</span></h5>
+            </div>
+            <h6>
+              Question <span class="badge badge-pill badge-primary" id="numberOfQuestion_1"></span> of
               <span class="badge badge-pill badge-secondary">10</span>
             </h6>
           </div>
@@ -245,10 +288,16 @@
               <div class="text-center text-sm-right text-md-left text-lg-left text-xl-left mb-3 mt-3">
                 <h4>Points: <span class="badge badge-pill badge-dark" id="finalPoints">0</span></h4>
                 <h4>Longest streak: <span class="badge badge-pill badge-orange" id="longestStreak">0</span></h4>
-                <h4>
-                  Correct answers: <span class="badge badge-pill badge-primary" id="numberOfCorrectAnswers">1</span> of
-                  <span class="badge badge-pill badge-secondary">10</span>
-                </h4>
+                <div
+                  class="d-flex row justify-content-center justify-content-sm-end justify-content-md-start justify-content-lg-start justify-content-xl-start"
+                >
+                  <h4>&nbsp;&nbsp;Correct answers:&nbsp;</h4>
+                  <h4>
+                    <span class="d-none d-sm-inline d-md-inline d-lg-none">&nbsp;</span>
+                    <span class="badge badge-pill badge-primary" id="numberOfCorrectAnswers">1</span> of
+                    <span class="badge badge-pill badge-secondary">10</span>&nbsp;&nbsp;
+                  </h4>
+                </div>
               </div>
               <img
                 src="./images/cat1.png"

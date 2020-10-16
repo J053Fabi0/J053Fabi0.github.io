@@ -8,6 +8,7 @@ import TriviaGame from "./TriviaGame";
 
 (function () {
   const numberOfQuestions = 10;
+  const useRegresiveCount = true;
   const BASE_URL = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=url3986`;
   let difficulty = "easy";
   let categoryOfQuestions = "any";
@@ -18,7 +19,7 @@ import TriviaGame from "./TriviaGame";
   const phrases = new Phrases();
 
   // Show the first forum
-  $("#collapseForum").collapse("show");
+  $("#collapseForm").collapse("show");
 
   // Add events listeners to the difficulty buttons
   ["easyButton", "mediumButton", "hardButton", "anyButton"].forEach((id) => {
@@ -84,19 +85,21 @@ import TriviaGame from "./TriviaGame";
 
           default:
             document.getElementById("alerta_titulo").innerHTML = "Oh, no...";
-            document.getElementById("alerta_mensaje").innerHTML = "There was an unknown error.";
+            document.getElementById(
+              "alerta_mensaje"
+            ).innerHTML = `There was an unknown error with code ${res.data.response_code}.`;
             $("#alerta").modal();
         }
 
         // Enable the startTrivia button just in case there was an error.
-        enableButton();
+        enableStartButton();
       })
       .catch((err) => {
-        enableButton();
+        enableStartButton();
         handleErr(err);
       });
 
-    function enableButton() {
+    function enableStartButton() {
       window.setTimeout(() => {
         button.innerHTML = "Start the trivia!";
         button.removeAttribute("disabled");
@@ -106,14 +109,15 @@ import TriviaGame from "./TriviaGame";
 
   document.getElementById("leaveTriviaBtn").addEventListener("click", () => {
     $("#results").collapse("hide");
-    $("#questions").collapse("hide");
-    $("#collapseForum").collapse("show");
+    $("#questions_0").collapse("hide");
+    $("#questions_1").collapse("hide");
+    $("#collapseForm").collapse("show");
   });
 
   function startTrivia(questions) {
     const triviaGame = new TriviaGame(questions, numberOfQuestions, images, phrases);
 
-    triviaGame.startNewTrivia();
+    triviaGame.startNewTrivia(useRegresiveCount);
   }
 
   function handleErr(err) {
