@@ -128,7 +128,7 @@
                   <button type="button" class="border border-dark btn btn-secondary btn-lg" id="anyButton">Any</button>
                 </div>
               </div>
-              <div class="col-lg-7 mt-sm-3 mt-md-3 mt-lg-0 mt-xl-0">
+              <div class="col-lg-7 mt-3 mt-sm-3 mt-md-3 mt-lg-0 mt-xl-0">
                 <label for="typeOfQuestions"><h5>Select the type of the questions</h5></label>
                 <select class="custom-select custom-select-lg" id="typeOfQuestions">
                   <option value="any">Multiple choice and True / False</option>
@@ -226,14 +226,23 @@
       <div class="jumbotron bg-light">
         <div class="container">
           <div class="d-flex justify-content-center">
-            <h1 id="resultsTitle" class="font-weight-bold"></h1>
+            <h1 id="resultsTitle" class="font-weight-bold">congrats</h1>
           </div>
-          <div class="d-flex justify-content-center align-items-center mt-5">
-            <div class="d-flex w-25 justify-content-end mr-3">
-              <h2 class="text-right">These are your<br />final results</h2>
+          <div
+            class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row justify-content-center align-items-center mt-5"
+          >
+            <div
+              class="d-flex justify-content-center justify-content-sm-center justify-content-md-end justify-content-lg-end justify-content-xl-end mr-3"
+              id="theseAreURFinalRes"
+            >
+              <h2 class="text-center text-sm-center text-md-right text-lg-right text-xl-right">
+                These are your<br />final results
+              </h2>
             </div>
-            <div class="d-flex justify-content-start align-items-center ml-3">
-              <div class="flex-column">
+            <div
+              class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row flex-xl-row justify-content-start align-items-center ml-3"
+            >
+              <div class="text-center text-sm-right text-md-left text-lg-left text-xl-left mb-3 mt-3">
                 <h4>Points: <span class="badge badge-pill badge-dark" id="finalPoints">0</span></h4>
                 <h4>Longest streak: <span class="badge badge-pill badge-orange" id="longestStreak">0</span></h4>
                 <h4>
@@ -241,7 +250,13 @@
                   <span class="badge badge-pill badge-secondary">10</span>
                 </h4>
               </div>
-              <img src="./images/cat1.png" alt="" id="resultsImage" class="ml-3 border border-secondary" style="height: 9em" />
+              <img
+                src="./images/cat1.png"
+                alt="A cat image"
+                id="resultsImage"
+                class="ml-3 border border-secondary"
+                style="height: 9em"
+              />
             </div>
           </div>
           <div class="d-flex justify-content-center align-items-center mt-5">

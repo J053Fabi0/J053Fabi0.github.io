@@ -7,7 +7,7 @@ import axios from "axios";
 import TriviaGame from "./TriviaGame";
 
 (function () {
-  const numberOfQuestions = 3;
+  const numberOfQuestions = 10;
   const BASE_URL = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=url3986`;
   let difficulty = "easy";
   let categoryOfQuestions = "any";

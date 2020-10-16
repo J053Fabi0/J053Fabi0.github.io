@@ -1,230 +1,229 @@
 html,
 body {
-    margin: 0px;
-    width: 100%;
-    height: 100%;
-    font-family: -apple-system;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system;
 }
 
 header {
-    display: flex;
-    background-color: rgba(255, 255, 255, 1);
-    height: 80px;
-    width: 100%;
-    align-items: center;
+  display: flex;
+  background-color: rgba(255, 255, 255, 1);
+  height: 80px;
+  width: 100%;
+  align-items: center;
 }
 
 #fake_header {
-    height: 55px;
-    width: 100%;
+  height: 55px;
+  width: 100%;
 }
 
 header {
-    position: fixed;
-    z-index: 100;
+  position: fixed;
+  z-index: 100;
 }
 
 header .icon:last-child {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 #separator {
-    width: 100%;
+  width: 100%;
 }
 
 #logo {
-    background-size: 50%;
-    margin: 0px 10px 0px 25px;
-    cursor: pointer;
-    border-radius: 50%;
+  background-size: 50%;
+  margin: 0px 10px 0px 25px;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 #btn_seleccionado {
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #btn_seleccionado:hover {
-    background-color: #303030;
+  background-color: #303030;
 }
 
 header button {
-    background-color: white;
-    color: black;
-    border-radius: 30px;
-    border-style: none;
-    font-weight: bold;
-    height: 60%;
-    padding: 0px 15px 0px 15px;
-    margin-left: 10px;
-    font-size: 16px;
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+  border-style: none;
+  font-weight: bold;
+  height: 60%;
+  padding: 0px 15px 0px 15px;
+  margin-left: 10px;
+  font-size: 16px;
 }
 
 header button:hover {
-    background-color: #efefef;
-    cursor: pointer;
+  background-color: #efefef;
+  cursor: pointer;
 }
 
 #barra img {
-    height: 18px;
-    opacity: 0.6;
-    cursor: default;
+  height: 18px;
+  opacity: 0.6;
+  cursor: default;
 }
 
 #barra {
-    width: 100%;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    background-color: #efefef;
-    border-style: none;
-    border-radius: 30px;
-    padding: 10px;
-    margin-right: 15px;
-    margin-left: 15px;
-    border-style: solid;
-    border-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  background-color: #efefef;
+  border-style: none;
+  border-radius: 30px;
+  padding: 10px;
+  margin-right: 15px;
+  margin-left: 15px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0);
 }
 
 #barra input {
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    border-style: none;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  border-style: none;
 }
 
 #barra input:focus {
-    border: none;
+  border: none;
 }
 
 #barra:hover {
-    filter: brightness(0.9);
+  filter: brightness(0.9);
 }
 
 #barra:active {
-    border-color: #0aa7d1;
+  border-color: #0aa7d1;
 }
 
-#barra input:hover+#barra img {
-    display: none;
+#barra input:hover + #barra img {
+  display: none;
 }
 
 main *,
 main {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 main {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    padding: 0px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0px;
 }
 
 .columna {
-    -ms-flex: 12.5%;
-    flex: 12.5%;
-    max-width: 12.5%;
-    padding: 8px;
+  -ms-flex: 12.5%;
+  flex: 12.5%;
+  max-width: 12.5%;
+  padding: 8px;
 }
-
 
 /* Esta imágen estará escondida. Es la imagen que le da la altura correcta al div con el background-image */
 
 .imagen img {
-    width: 98%;
-    visibility: hidden;
+  width: 98%;
+  visibility: hidden;
 }
 
 .imagen {
-    vertical-align: middle;
-    cursor: zoom-in;
-    margin-top: 20px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 100%;
-    border-radius: 24px;
-    border-style: none;
-    position: relative;
+  vertical-align: middle;
+  cursor: zoom-in;
+  margin-top: 20px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  border-radius: 24px;
+  border-style: none;
+  position: relative;
 }
 
 .guardar {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #e00226;
-    color: white;
-    border-radius: 30px;
-    border-style: none;
-    font-weight: bold;
-    height: 40px;
-    padding: 0px 15px 0px 15px;
-    margin-left: 10px;
-    font-size: 13px;
-    visibility: hidden;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e00226;
+  color: white;
+  border-radius: 30px;
+  border-style: none;
+  font-weight: bold;
+  height: 40px;
+  padding: 0px 15px 0px 15px;
+  margin-left: 10px;
+  font-size: 13px;
+  visibility: hidden;
+  cursor: pointer;
 }
 
 .share_buttons {
-    position: absolute;
-    visibility: hidden;
-    bottom: 10px;
-    left: 0px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 15px;
+  position: absolute;
+  visibility: hidden;
+  bottom: 10px;
+  left: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 15px;
 }
 
 .share_buttons button:nth-child(1) {
-    background: url("../src/share.png");
-    background-position: center center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    text-align: center;
+  background: url("../src/share.png");
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  text-align: center;
 }
 
 .share_buttons button:nth-child(2) {
-    background: url("../src/more.png");
-    background-position: center center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    text-align: center;
+  background: url("../src/more.png");
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  text-align: center;
 }
 
 .share_buttons * {
-    background-color: #efefef;
-    color: black;
-    border-radius: 50%;
-    border-style: none;
-    font-weight: bold;
-    height: 25px;
-    width: 25px;
-    margin-left: 10px;
-    font-size: 13px;
-    cursor: pointer;
+  background-color: #efefef;
+  color: black;
+  border-radius: 50%;
+  border-style: none;
+  font-weight: bold;
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .icon {
-    margin-left: 15px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+  margin-left: 15px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .icon:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #perfil {
-    width: 40px;
-    height: 40px;
-    margin-left: 15px;
-    border-radius: 50%;
-    cursor: pointer;
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 #logo:hover,
@@ -233,104 +232,100 @@ main {
 .share_buttons button:hover,
 .guardar:hover,
 .flotante:hover {
-    filter: brightness(0.8);
+  filter: brightness(0.8);
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .hover_circulo {
-    background-color: grey;
-    min-width: 40px;
-    min-height: 40px;
-    border-radius: 50%;
-    opacity: 0;
+  background-color: grey;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  opacity: 0;
 }
 
 .hover_circulo:hover {
-    opacity: 0.2;
+  opacity: 0.2;
 }
 
 .flotante {
-    display: scroll;
-    position: fixed;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    z-index: 100;
-    border-radius: 50%;
-    background-position: center center;
-    background-size: 100%;
-    cursor: pointer;
+  display: scroll;
+  position: fixed;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  z-index: 100;
+  border-radius: 50%;
+  background-position: center center;
+  background-size: 100%;
+  cursor: pointer;
 }
 
 #flotante1 {
-    bottom: 20px;
-    background-image: url("../src/ayuda.png");
+  bottom: 20px;
+  background-image: url("../src/ayuda.png");
 }
 
 #flotante2 {
-    bottom: 80px;
-    background-image: url("../src/mas.png");
+  bottom: 80px;
+  background-image: url("../src/mas.png");
 }
-
 
 /* Cuando .imagen tiene hover, afecta al boton y al share_buttons para que sean visibles */
 
-.imagen:hover>button,
-.imagen:hover>.share_buttons {
-    visibility: visible;
+.imagen:hover > button,
+.imagen:hover > .share_buttons {
+  visibility: visible;
 }
-
 
 /* Cuatro colunas */
 
 @media screen and (max-width: 950px) {
-    .columna {
-        flex: 25%;
-        max-width: 25%;
-    }
+  .columna {
+    flex: 25%;
+    max-width: 25%;
+  }
 }
-
 
 /* Dos columnas */
 
 @media screen and (max-width: 556px) {
-    .columna {
-        flex: 50%;
-        max-width: 50%;
-    }
+  .columna {
+    flex: 50%;
+    max-width: 50%;
+  }
 }
-
 
 /* Una columna */
 
 @media screen and (max-width: 300px) {
-    .columna {
-        flex: 100%;
-        max-width: 100%;
-    }
+  .columna {
+    flex: 100%;
+    max-width: 100%;
+  }
 }
-
 
 /* Esconde los botones cuando no queda mucho tiempo */
 
 @media screen and (max-width: 732px) {
-    /* Solo esconde los que no son el primero, el que está seleccionado */
-    header button:not(:first-of-type) {
-        display: none;
-    }
-    #barra {
-        display: none;
-    }
-    .hidden {
-        display: block;
-    }
+  /* Solo esconde los que no son el primero, el que está seleccionado */
+  header button:not(:first-of-type) {
+    display: none;
+  }
+  #barra {
+    display: none;
+  }
+  .hidden {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 502px) {
-    .icon:not(:last-child) {
-        display: none;
-    }
+  .icon:not(:last-child) {
+    display: none;
+  }
 }
+
