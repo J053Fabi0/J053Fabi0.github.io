@@ -229,8 +229,7 @@ class TriviaGame {
     const startAgainBtn = document.getElementById(`startAgain`);
     const resultsImage = document.getElementById(`resultsImage`);
 
-    resultsTitle.innerText =
-      this.corectAnswered >= 5 ? "\u{1F389} Congrats! \u{1F973}" : "Oh, well... At least you tried, right?";
+    resultsTitle.innerText = this.corectAnswered > 5 ? "\u{1F389} Congrats! \u{1F973}" : "Oh, well... At least you tried, right?";
 
     resultsImage.src = this.images.catImage(this.corectAnswered <= 5);
 
