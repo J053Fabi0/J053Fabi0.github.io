@@ -13,6 +13,7 @@ import TriviaGame from "./TriviaGame";
   let difficulty = "easy";
   let categoryOfQuestions = "any";
   let typeOfQuestions = "any";
+  let token = "";
 
   // Declare the instances outside any other function, so that they keep their values throughout the different trivias
   const images = new Images();
@@ -67,43 +68,66 @@ import TriviaGame from "./TriviaGame";
     button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`;
     button.setAttributeNode(document.createAttribute("disabled"));
 
-    axios
-      .get(URL)
-      .then((res) => {
-        switch (res.data.response_code) {
-          case 0:
-            startTrivia(res.data.results);
-            break;
+    function getToken() {
+      return new Promise((resolve, reject) =>
+        axios
+          .get("https://opentdb.com/api_token.php?command=request")
+          .then((res) => resolve(res.data.token))
+          .catch((err) => reject(err))
+      );
+    }
 
-          case 1:
-            document.getElementById("alerta_titulo").innerHTML = "Oh, no...";
-            document.getElementById("alerta_mensaje").innerHTML =
-              "We don't have enough questions for the specific options you choosed.<br><br>" +
-              "Please try with some other options.";
-            $("#alerta").modal();
-            break;
+    if (token === "")
+      getToken()
+        .then((newToken) => {
+          token = newToken;
+          startGame();
+        })
+        .catch((err) => handleErr(err));
+    else startGame();
 
-          default:
-            document.getElementById("alerta_titulo").innerHTML = "Oh, no...";
-            document.getElementById(
-              "alerta_mensaje"
-            ).innerHTML = `There was an unknown error with code ${res.data.response_code}.`;
-            $("#alerta").modal();
-        }
+    function startGame() {
+      axios
+        .get(`${URL}&token=${token}`)
+        .then((res) => {
+          console.log(`${URL}&token=${token}`);
+          switch (res.data.response_code) {
+            case 0:
+              startTrivia(res.data.results);
+              break;
 
-        // Enable the startTrivia button just in case there was an error.
-        enableStartButton();
-      })
-      .catch((err) => {
-        enableStartButton();
-        handleErr(err);
-      });
+            case 1:
+            case 4:
+              // axios.get(`https://opentdb.com/api_token.php?command=reset&token=${token}`).then(() => startGame());
+              document.getElementById("alerta_titulo").innerHTML = "Oh, no...";
+              document.getElementById("alerta_mensaje").innerHTML =
+                "We don't have enough questions for the specific options you choosed, either because you have already " +
+                "answered all of the questions we had, or simply because our database isn't big enough yet. Sorry.<br><br>" +
+                "Please try with some other options or reload the page if you want to answer the same questios again.";
+              $("#alerta").modal();
+              break;
 
-    function enableStartButton() {
-      window.setTimeout(() => {
-        button.innerHTML = "Start the trivia!";
-        button.removeAttribute("disabled");
-      }, 100);
+            default:
+              document.getElementById("alerta_titulo").innerHTML = "Oh, no...";
+              document.getElementById(
+                "alerta_mensaje"
+              ).innerHTML = `There was an unknown error with code ${res.data.response_code}.`;
+              $("#alerta").modal();
+          }
+
+          // Enable the startTrivia button just in case there was an error.
+          enableStartButton();
+        })
+        .catch((err) => {
+          enableStartButton();
+          handleErr(err);
+        });
+      function enableStartButton() {
+        window.setTimeout(() => {
+          button.innerHTML = "Start the trivia!";
+          button.removeAttribute("disabled");
+        }, 100);
+      }
     }
   });
 
