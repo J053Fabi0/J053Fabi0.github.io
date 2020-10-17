@@ -115,3 +115,5 @@ typings/
 # End of https://www.toptal.com/developers/gitignore/api/node
 
 master-code
+
+Trivia/src/Session.vim
