@@ -1,0 +1,33 @@
+@import "custom";
+@import "~bootstrap/scss/bootstrap";
+
+$primary_color: #79b5ff; /* Esta es una variable en Sass */
+
+body {
+  background-color: $primary_color;
+
+  .option-btn {
+    height: 5rem;
+    font-size: large;
+  }
+
+  .badge-borwn {
+    background-color: brown;
+    color: white;
+  }
+
+  .badge-orange {
+    background-color: #dd9300;
+    color: black;
+  }
+
+  .badge-pink {
+    background-color: #ff33cc;
+    color: white;
+  }
+
+  .badge-purple {
+    background-color: purple;
+    color: white;
+  }
+}
