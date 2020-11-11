@@ -76,18 +76,25 @@ class TriviaGame {
         old_button.parentNode.replaceChild(new_button, old_button);
 
         // Add event listener
-        document.getElementById(`answerBtn_${i}_${j}`).addEventListener("click", (btn) => this.questionAnswered(btn));
+        document
+          .getElementById(`answerBtn_${i}_${j}`)
+          .addEventListener("click", (btn) => this.questionAnswered(btn));
       }
     }
   }
 
   disableBtns() {
     for (let i = 0; i < 4; i++)
-      document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).setAttributeNode(document.createAttribute("disabled"));
+      document
+        .getElementById(`answerBtn_${i}_${this.evenQuestion}`)
+        .setAttributeNode(document.createAttribute("disabled"));
   }
 
   enableBtns() {
-    for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).removeAttribute("disabled");
+    for (let i = 0; i < 4; i++)
+      document
+        .getElementById(`answerBtn_${i}_${this.evenQuestion}`)
+        .removeAttribute("disabled");
   }
 
   questionAnswered(btn) {
@@ -102,7 +109,8 @@ class TriviaGame {
     } else {
       this.streak = 0;
     }
-    this.longestStreak = this.streak > this.longestStreak ? this.streak : this.longestStreak;
+    this.longestStreak =
+      this.streak > this.longestStreak ? this.streak : this.longestStreak;
 
     this.updatePoints();
     this.markCorrectAnswer(btn.target.id);
@@ -110,11 +118,16 @@ class TriviaGame {
     // Show the motivational phrase
     window.setTimeout(() => {
       // if (this.currentQuestion < this.numberOfQuestions) {
-      document.getElementById("motivationalPhrase").innerText = this.phrases.getMotivationalPhrase(
+      document.getElementById(
+        "motivationalPhrase"
+      ).innerText = this.phrases.getMotivationalPhrase(
         btn.target.id == this.correctBtn
       );
       $("#motivationalModal").modal();
-      window.setTimeout(() => $("#motivationalModal").modal("hide"), this.phraseTime);
+      window.setTimeout(
+        () => $("#motivationalModal").modal("hide"),
+        this.phraseTime
+      );
       // }
 
       this.showNextQuestionInMs(this.phraseTime);
@@ -123,7 +136,9 @@ class TriviaGame {
 
   markCorrectAnswer(idOfClickedBtn) {
     for (let i = 0; i < 4; i++) {
-      const btn = document.getElementById(`answerBtn_${i}_${this.evenQuestion}`);
+      const btn = document.getElementById(
+        `answerBtn_${i}_${this.evenQuestion}`
+      );
 
       let color;
       if (btn.id == this.correctBtn) color = "success";
@@ -136,7 +151,8 @@ class TriviaGame {
 
   restoreColorOfBtns() {
     for (let i = 0; i < 4; i++)
-      document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).className = "btn btn-block option-btn btn-info";
+      document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).className =
+        "btn btn-block option-btn btn-info";
   }
 
   startNewTrivia(useRegresiveCount) {
@@ -176,21 +192,33 @@ class TriviaGame {
   prepareNextQuestion() {
     const thisQuestion = this.thisQuestion;
     const difficulty = thisQuestion.difficulty;
-    const questionText = document.getElementById(`questionText_${this.evenQuestion}`);
+    const questionText = document.getElementById(
+      `questionText_${this.evenQuestion}`
+    );
     this.restoreColorOfBtns();
     this.enableBtns();
 
     // Se the badge that says the difficulty of the current question
-    const hardnessOfQuestion = document.getElementById(`hardnessOfQuestion_${this.evenQuestion}`);
+    const hardnessOfQuestion = document.getElementById(
+      `hardnessOfQuestion_${this.evenQuestion}`
+    );
     hardnessOfQuestion.className = `badge badge-${
-      difficulty == "easy" ? "success" : difficulty == "medium" ? "warning" : "danger"
+      difficulty == "easy"
+        ? "success"
+        : difficulty == "medium"
+        ? "warning"
+        : "danger"
     }`;
     hardnessOfQuestion.innerText = this._capitalizeFirstLetter(difficulty);
 
-    document.getElementById(`categoryOfQuestion_${this.evenQuestion}`).innerText = decodeURIComponent(thisQuestion.category);
+    document.getElementById(
+      `categoryOfQuestion_${this.evenQuestion}`
+    ).innerText = decodeURIComponent(thisQuestion.category);
 
     // Set the current number of question to the index
-    const numberOfQuestion = document.getElementById(`numberOfQuestion_${this.evenQuestion}`);
+    const numberOfQuestion = document.getElementById(
+      `numberOfQuestion_${this.evenQuestion}`
+    );
     numberOfQuestion.innerHTML = this.currentQuestion + 1;
 
     // Show the question in the title
@@ -200,16 +228,22 @@ class TriviaGame {
     document.getElementById(`answersRow_1_${this.evenQuestion}`).style.display =
       thisQuestion.type == "multiple" ? "flex" : "none";
 
-
     // Assign the text to each button
     if (thisQuestion.type == "multiple") {
       const scrambledAnswers = this.scrambledAnswers;
-      for (let i = 0; i < 4; i++) document.getElementById(`answerBtn_${i}_${this.evenQuestion}`).innerText = scrambledAnswers[i];
+      for (let i = 0; i < 4; i++)
+        document.getElementById(
+          `answerBtn_${i}_${this.evenQuestion}`
+        ).innerText = scrambledAnswers[i];
     } else {
-      document.getElementById(`answerBtn_0_${this.evenQuestion}`).innerText = "True";
-      document.getElementById(`answerBtn_1_${this.evenQuestion}`).innerText = "False";
+      document.getElementById(`answerBtn_0_${this.evenQuestion}`).innerText =
+        "True";
+      document.getElementById(`answerBtn_1_${this.evenQuestion}`).innerText =
+        "False";
       this.correctBtn =
-        thisQuestion.correct_answer == "True" ? `answerBtn_0_${this.evenQuestion}` : `answerBtn_1_${this.evenQuestion}`;
+        thisQuestion.correct_answer == "True"
+          ? `answerBtn_0_${this.evenQuestion}`
+          : `answerBtn_1_${this.evenQuestion}`;
     }
 
     console.log(this.correctBtn);
@@ -230,7 +264,10 @@ class TriviaGame {
     const startAgainBtn = document.getElementById(`startAgain`);
     const resultsImage = document.getElementById(`resultsImage`);
 
-    resultsTitle.innerText = this.corectAnswered > 5 ? "\u{1F389} Congrats! \u{1F973}" : "Oh, well... At least you tried, right?";
+    resultsTitle.innerText =
+      this.corectAnswered > 5
+        ? "\u{1F389} Congrats! \u{1F973}"
+        : "Oh, well... At least you tried, right?";
 
     resultsImage.src = this.images.catImage(this.corectAnswered <= 5);
 

@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
-function ListaContactos() {
-  const [contactos, setContactos] = useState([
-    { id: 1, name: "Mario", lastName: "Mario" },
-    { id: 2, name: "Luigi", lastName: "Mario" },
-  ]);
+function ListaContactos({ lista }) {
   return (
     <div>
       <h1>Contactos</h1>
-      {contactos.map(({ name, id }) => (
-        <h1 id={id}>{name}</h1>
-      ))}
+      {lista.length === 0 ? (
+        <p>Cargando</p>
+      ) : (
+        lista.map(({ name, id }) => <h1 id={id}>{name}</h1>)
+      )}
     </div>
   );
 }
